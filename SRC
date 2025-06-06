@@ -244,7 +244,7 @@ function Update:Notify(desc)
 
 	Image.Size = UDim2.new(0, 45, 0, 45);
 
-	Image.Image = _G.NotificationImage or "rbxassetid://129500678263595";
+	Image.Image = "rbxassetid://83909638229038";
 
 	Title.Parent = Frame;
 
