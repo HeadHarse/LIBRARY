@@ -1,5 +1,5 @@
 --// library script private
-getgenv().namehub = "Private"
+getgenv().namehub = "Voltrix | Visual Seed Spawner"
 local UserInputService = game:GetService('UserInputService')
 local LocalPlayer = game:GetService('Players').LocalPlayer
 local TweenService = game:GetService('TweenService')
@@ -72,17 +72,17 @@ Library.load_flags()
 Library.clear()
 
 function Library:open()
-	self.Container.Visible = true
-	self.Shadow.Visible = true
-	self.Mobile.Modal = true
+    self.Container.Visible = true
+    self.Shadow.Visible = true
+    self.Mobile.Modal = true
 
-	TweenService:Create(self.Container, TweenInfo.new(0.6, Enum.EasingStyle.Circular, Enum.EasingDirection.InOut), {
-		Size = UDim2.new(0, 699, 0, 426)
-	}):Play()
+    TweenService:Create(self.Container, TweenInfo.new(0.6, Enum.EasingStyle.Circular, Enum.EasingDirection.InOut), {
+        Size = UDim2.new(0, 500, 0, 400)  -- New size (500x400)
+    }):Play()
 
-	TweenService:Create(self.Shadow, TweenInfo.new(0.6, Enum.EasingStyle.Circular, Enum.EasingDirection.InOut), {
-		Size = UDim2.new(0, 776, 0, 509)
-	}):Play()
+    TweenService:Create(self.Shadow, TweenInfo.new(0.6, Enum.EasingStyle.Circular, Enum.EasingDirection.InOut), {
+        Size = UDim2.new(0, 577, 0, 483)  -- Shadow should be slightly larger (577x483)
+    }):Play()
 end
 
 function Library:close()
@@ -166,7 +166,7 @@ function Library:new()
 	Container.BorderSizePixel = 0
 	Container.ClipsDescendants = true
 	Container.Position = UDim2.new(0.5, 0, 0.5, 0)
-	Container.Size = UDim2.new(0, 699, 0, 426)
+	Container.Size = UDim2.new(0, 500, 0, 400)
 
 	local ContainerCorner = Instance.new("UICorner")
 	ContainerCorner.CornerRadius = UDim.new(0, 20)
@@ -218,7 +218,7 @@ function Library:new()
 	Line.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Line.BorderSizePixel = 0
 	Line.Position = UDim2.new(0.296137333, 0, 0.0915492922, 0)
-	Line.Size = UDim2.new(0, 2, 0, 387)
+	Line.Size = UDim2.new(0, 2, 0, 361)
 
     local tabs = Instance.new("ScrollingFrame")
 	tabs.Name = "Tabs"
@@ -228,7 +228,7 @@ function Library:new()
 	tabs.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	tabs.BorderSizePixel = 0
 	tabs.Position = UDim2.new(0, 0, 0.0915492922, 0)
-	tabs.Size = UDim2.new(0, 209, 0, 386)
+	tabs.Size = UDim2.new(0, 209, 0, 361)
 	tabs.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
 	tabs.ScrollBarThickness = 0
     tabs.Parent = container.Container
@@ -251,7 +251,7 @@ function Library:new()
 	mobile_button.BackgroundColor3 = Color3.fromRGB(27, 28, 33)
 	mobile_button.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	mobile_button.BorderSizePixel = 0
-	mobile_button.Position = UDim2.new(0.0210955422, 0, 0.91790241, 0)
+	mobile_button.Position = UDim2.new(0.0210955422, 0, 0.925, 0)
 	mobile_button.Size = UDim2.new(0, 122, 0, 38)
 	mobile_button.AutoButtonColor = false
 	mobile_button.Modal = true
@@ -259,6 +259,7 @@ function Library:new()
 	mobile_button.Text = ""
 	mobile_button.TextColor3 = Color3.fromRGB(0, 0, 0)
 	mobile_button.TextSize = 14.000
+	mobile_button.Draggable = True
     mobile_button.Parent = container
 
 	local UICorner = Instance.new("UICorner")
@@ -512,7 +513,7 @@ function Library:new()
 		left_section.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		left_section.BorderSizePixel = 0
 		left_section.Position = UDim2.new(0.326180249, 0, 0.126760557, 0)
-		left_section.Size = UDim2.new(0, 215, 0, 372)
+		left_section.Size = UDim2.new(0, 215, 0, 346)
 		left_section.AutomaticCanvasSize = Enum.AutomaticSize.XY
 		left_section.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
 		left_section.ScrollBarThickness = 0
@@ -531,7 +532,7 @@ function Library:new()
 		right_section.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		right_section.BorderSizePixel = 0
 		right_section.Position = UDim2.new(0.662374794, 0, 0.126760557, 0)
-		right_section.Size = UDim2.new(0, 215, 0, 372)
+		right_section.Size = UDim2.new(0, 215, 0, 346)
 		right_section.AutomaticCanvasSize = Enum.AutomaticSize.XY
 		right_section.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
 		right_section.ScrollBarThickness = 0
@@ -1346,173 +1347,115 @@ function Library:new()
 end
 
 local main = Library.new()
-local tab = main.create_tab('Main')
+local tab = main.create_tab('Seed Spawner')
 
 tab.create_title({
-	name = 'AutoParry',
+	name = 'Seed Spawner',
 	section = 'left'
 })
-tab.create_toggle({
-	name = 'Enabled',
-	flag = 'autoparry',
 
+local currentSeed = ""
+
+tab.create_textbox({
+	name = 'Put any Seed name',
+	flag = 'seed_name',
 	section = 'left',
-	enabled = false,
-
-	callback = function(state: boolean)
-		print(`{state}`)
+	value = "",
+	
+	callback = function(text)
+		currentSeed = text
 	end
 })
-tab.create_dropdown({
-	name = 'Direction',
-	flag = 'Direction',
+
+local seeds = {
+	["Carrot"] = 0,
+	["Tomato"] = 0,
+	["Strawberry"] = 0,
+	["Blueberry"] = 0,
+	["Corn"] = 0,
+	["Pumpkin"] = 0,
+	["Watermelon"] = 0,
+	["Apple"] = 0,
+	["Coconut"] = 0,
+	["Dragon Fruit"] = 0,
+	["Super"] = 0,
+	["Bamboo"] = 0,
+	["Raspberry"] = 0,
+	["Pineapple"] = 0,
+	["Peach"] = 0,
+	["Cactus"] = 0,
+	["Grape"] = 0,
+	["Pear"] = 0,
+	["Eggplant"] = 0,
+	["Purple Cabbage"] = 0,
+	["Lemon"] = 0,
+	["Chocolate Carrot"] = 0,
+	["Easter Egg"] = 0,
+	["Orange Tulip"] = 0,
+	["Pink Tulip"] = 0,
+	["Crocus"] = 0,
+	["Daffodil"] = 0,
+	["Cherry Blossom"] = 0,
+	["Red Lollipop"] = 0,
+	["Blue Lollipop"] = 0,
+	["Candy Sunflower"] = 0,
+	["Banana"] = 0,
+	["Passionfruit"] = 0,
+	["Cursed Fruit"] = 0,
+	["Lotus"] = 0,
+	["Papaya"] = 0,
+	["Soul Fruit"] = 0,
+	["Mega Mushroom"] = 0,
+	["Mango"] = 0,
+	["Venus Fly Trap"] = 0,
+	["Cranberry"] = 0,
+	["Durian"] = 0,
+	["Succulent"] = 0,
+	["Candy Blossom"] = 0,
+	["Mushroom"] = 0,
+	["Nightshade"] = 0,
+	["Avocado"] = 0,
+	["Pepper"] = 0,
+	["Moon Blossom"] = 0,
+	["Moonglow"] = 0,
+	["Starfruit"] = 0,
+	["Moonflower"] = 0,
+	["Mint"] = 0,
+	["Glowshroom"] = 0,
+	["Cacao"] = 0,
+	["Beanstalk"] = 0,
+	["Crimson Vine"] = 0,
+	["Moon Melon"] = 0,
+	["Blood Banana"] = 0,
+	["Moon Mango"] = 0,
+	["Celestiberry"] = 0
+}
+
+tab.create_button({
+	name = 'Spawn Seed',
 	section = 'left',
+	
+	callback = function()
+		local seedName = currentSeed
+		if seedName == "" or not seeds[seedName] then
+			warn("Invalid seed name: " .. tostring(seedName))
+			return
+		end
 
-	option = 'Custom',
-	options = {'Custom', 'High', 'Random'},
-
-	callback = function(value: string)
-		print(value)
-	end
-})
-tab.create_title({
-	name = 'Visualizer',
-	section = 'right'
-})
-tab.create_toggle({
-	name = 'Enabled',
-	flag = 'visualise',
-
-	section = 'right',
-	enabled = false,
-
-	callback = function(state: boolean)
-	print(`{state}`)
-	end
-})
-tab.create_title({
-	name = 'HitSound',
-	section = 'left'
-})
-tab.create_toggle({
-	name = 'Enabled',
-	flag = 'hitsound',
-
-	section = 'left',
-	enabled = false,
-
-	callback = function(state: boolean)
-		print(`{state}`)
-	end
-})
-tab.create_dropdown({
-	name = 'Sound',
-	flag = 'soundpick',
-	section = 'left',
-
-	option = 'Neverlose',
-	options = {'Click', 'Neverlose', 'Bonk'},
-
-	callback = function(value: string)
-		print(value)
-	end
-})
-tab.create_title({
-	name = 'AI',
-	section = 'right'
-})
-tab.create_toggle({
-	name = 'Enabled',
-	flag = 'AI',
-
-	section = 'right',
-	enabled = false,
-
-	callback = function(state: boolean)
-    print(`{state}`)
-	end
-})
-tab.create_title({
-	name = 'Spin',
-	section = 'right'
-})
-tab.create_toggle({
-	name = 'Enabled',
-	flag = 'spin',
-
-	section = 'right',
-	enabled = false,
-
-	callback = function(state: boolean)
-		print(`{state}`)
-	end
-})
-tab.create_slider({
-	name = 'Speed',
-	flag = 'spinspeed',
-
-	section = 'right',
-
-	value = 25,
-	minimum_value = 0,
-	maximum_value = 100,
-
-	callback = function(value: number)
-		print(value)
-	end
-})
-tab.create_title({
-	name = 'Auto Open Crate',
-	section = 'left'
-})
-tab.create_toggle({
-	name = 'Enabled',
-	flag = 'swordbox',
-
-	section = 'left',
-	enabled = false,
-
-	callback = function(state: boolean)
-		print(`{state}`)
-	end
-})
-tab.create_dropdown({
-	name = 'Crate',
-	flag = 'selectbox',
-	section = 'left',
-
-	option = 'Sword Crate',
-	options = {'Explosion Crate', 'Sword Crate'},
-
-	callback = function(value: string)
-		print(value)
-	end
-})
-tab.create_title({
-	name = 'Auto Rewards',
-	section = 'right'
-})
-tab.create_toggle({
-	name = 'Enabled',
-	flag = 'rewarde',
-
-	section = 'right',
-	enabled = false,
-
-	callback = function(state: boolean)
-		print(`{state}`)
-	end
-})
-tab.create_dropdown({
-	name = 'Rewards',
-	flag = 'selectrewards',
-	section = 'right',
-
-	option = 'Playtime Rewards',
-	options = {'Playtime Rewards', 'Clan Rewards', 'Login Rewards', 'All'},
-
-	callback = function(value: string)
-	    print(value)
+		local models = game:GetService("ReplicatedStorage"):WaitForChild("Seed_Models")
+		for _, v in pairs(models:GetChildren()) do
+			if v.Name == seedName then
+				seeds[seedName] += 1
+				local tool = Instance.new("Tool")
+				tool.Parent = game.Players.LocalPlayer.Backpack
+				tool.Name = seedName .. " Seed [X" .. seeds[seedName] .. "]"
+				tool.GripPos = Vector3.new(0.2, -0.45, 0.23)
+				local handle = v:Clone()
+				handle.Name = "Handle"
+				handle.Parent = tool
+				break
+			end
+		end
 	end
 })
 return library
