@@ -1,7 +1,7 @@
 -- Load UI Library
 local Library = (function()
-Library = {}
-SaveTheme = {}
+local Library = {}
+local SaveTheme = {}
 
 local themes = {
 	index = {'Dark', 'Amethyst', 'Blood'},
